@@ -17,4 +17,24 @@ class Client
     {
         $this->id = $id;
     }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function setCity(string $city): void
+    {
+        $this->city = $city;
+    }
+
+    public function setTelephone(string $telephone): void
+    {
+        $this->telephone = $telephone;
+    }
 }

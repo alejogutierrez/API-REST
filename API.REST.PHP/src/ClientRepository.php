@@ -38,7 +38,7 @@ class ClientRepository
         }
     }
 
-    public function findById(int $id): object|bool
+    public function findById(int $id): array|bool
     {
         $conn = $this->db->getConnection();
         $stmt = $conn->prepare("SELECT * FROM listado_clientes WHERE id = :id");
@@ -46,7 +46,19 @@ class ClientRepository
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function update(): void {}
+    public function update(Client $client): void
+    {
+        $conn = $this->db->getConnection();
+        $stmt = $conn->prepare(
+            "UPDATE listado_clientes SET email=:email, name=:name, city=:city, telephone=:telephone WHERE id=:id"
+        );
+        $stmt->bindParam(":email", $client->email);
+        $stmt->bindParam(":name", $client->name);
+        $stmt->bindParam(":city", $client->city);
+        $stmt->bindParam(":telephone", $client->telephone);
+        $stmt->bindParam(":id", $client->id);
+        $stmt->execute();
+    }
 
     public function deleteById(int $id): void
     {

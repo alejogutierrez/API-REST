@@ -15,8 +15,16 @@ $service = new ClientService($repository);
 $controller = new ClientController($service);
 $router = new Router();
 
-$router->addRoute("GET", "/", function () use ($controller) {
+$router->addRoute("GET", "/", function () {
+    echo "List Clients API";
+});
+
+$router->addRoute("GET", "/clients", function () use ($controller) {
     $controller->getClients();
+});
+
+$router->addRoute("GET", "/clients/:id", function ($id) use ($controller) {
+    $controller->findClient($id);
 });
 
 $router->addRoute("POST", "/clients", function () use ($controller) {
@@ -24,7 +32,11 @@ $router->addRoute("POST", "/clients", function () use ($controller) {
 });
 
 $router->addRoute("PUT", "/clients", function () use ($controller) {
-    $controller->createClient();
+    $controller->updateClient();
+});
+
+$router->addRoute("PATCH", "/clients/:id", function ($id) use ($controller) {
+    $controller->patchClient(intval($id));
 });
 
 $router->addRoute("DELETE", "/clients/:id", function ($id) use ($controller) {

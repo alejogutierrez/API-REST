@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Client;
-use Client as ClientClient;
 
 class ClientService implements ClientServiceInterface
 {
@@ -28,14 +27,19 @@ class ClientService implements ClientServiceInterface
         if (!$data) {
             return null;
         }
-        $client = new Client($data);
-        $client->setId($data->id);
+        $client = new Client(
+            $data["email"],
+            $data["name"],
+            $data["city"],
+            $data["telephone"]
+        );
+        $client->setId($data["id"]);
         return $client;
     }
 
-    public function update(Client $client): Client
+    public function update(Client $client): void
     {
-        return $this->repository->update($client);
+        $this->repository->update($client);
     }
 
     public function delete(int $id): void
